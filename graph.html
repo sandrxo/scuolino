@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafice de Funcții - Scuolino</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Încărcăm Chart.js direct de la CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    
+    <!-- Încărcăm math.js direct de la CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
+    
+    <!-- Script pentru grafic - direct în pagină pentru a evita problemele de import -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DOM încărcat, inițializez graficul...");
+
+            // Elemente DOM
+            const functionInput = document.getElementById("function");
+            const plotBtn = document.getElementById("plot-btn");
+            const xMinInput = document.getElementById("x-min");
+            const xMaxInput = document.getElementById("x-max");
+            const yMinInput = document.getElementById("y-min");
+            const yMaxInput = document.getElementById("y-max");
+            const graphCanvas = document.getElementById("graph-canvas");
+            const errorMessage = document.getElementById("error-message");
+            const presetBtns = document.querySelectorAll(".preset-btn");
+
+            // Verifică dacă elementele DOM au fost găsite
+            if (!graphCanvas) {
+                console.error("Elementul canvas pentru grafic nu a fost găsit!");
+                return;
+            }
+
+            // Verifică dacă Chart.js este disponibil
+            if (typeof Chart === "undefined") {
+                console.error("Chart.js nu este disponibil!");
+                alert("Chart.js nu este disponibil. Reîncărcați pagina sau verificați conexiunea la internet.");
+                return;
+            }
+
+            // Verifică dacă math.js este disponibil
+            if (typeof math === "undefined") {
+                console.error("math.js nu este disponibil!");
+                alert("math.js nu este disponibil. Reîncărcați pagina sau verificați conexiunea la internet.");
+                return;
+            }
+
+            console.log("Toate dependențele sunt disponibile.");
+
+            // Inițializează graficul
+            let chart = null;
+
+            // Event Listeners
+            plotBtn.addEventListener("click", () => {
+                console.log("Buton plot apăsat");
+                plotFunction();
+            });
+
+            presetBtns.forEach((button) => {
+                button.addEventListener("click", () => {
+                    console.log("Buton preset apăsat:", button.dataset.function);
+                    functionInput.value = button.dataset.function;
+                    plotFunction();
+                });
+            });
+
+            // Funcția principală pentru desenarea graficului
+            function plotFunction() {
+                console.log("Desenez graficul...");
+
+                // Obține valorile din input-uri
+                const functionString = functionInput.value.trim();
+                if (!functionString) {
+                    showError("Introduceți o funcție!");
+                    return;
+                }
+
+                const xMin = Number.parseFloat(xMinInput.value);
+                const xMax = Number.parseFloat(xMaxInput.value);
+                const yMin = Number.parseFloat(yMinInput.value);
+                const yMax = Number.parseFloat(yMaxInput.value);
+
+                console.log("Parametri grafic:", { functionString, xMin, xMax, yMin, yMax });
+
+                // Validează valorile introduse
+                if (isNaN(xMin) || isNaN(xMax) || isNaN(yMin) || isNaN(yMax)) {
+                    showError("Valorile introduse trebuie să fie numere!");
+                    return;
+                }
+
+                if (xMin >= xMax) {
+                    showError("X Min trebuie să fie mai mic decât X Max");
+                    return;
+                }
+
+                if (yMin >= yMax) {
+                    showError("Y Min trebuie să fie mai mic decât Y Max");
+                    return;
+                }
+
+                try {
+                    // Analizează funcția
+                    const expression = math.compile(functionString);
+                    console.log("Funcție compilată cu succes");
+
+                    // Generează punctele
+                    const points = [];
+                    const numPoints = 500; // Număr de puncte pentru grafic
+                    const step = (xMax - xMin) / numPoints;
+
+                    for (let i = 0; i <= numPoints; i++) {
+                        const x = xMin + i * step;
+                        try {
+                            const y = expression.evaluate({ x: x });
+
+                            // Verifică dacă y este un număr valid și în intervalul specificat
+                            if (!isNaN(y) && isFinite(y) && y >= yMin && y <= yMax) {
+                                points.push({ x, y });
+                            }
+                        } catch (e) {
+                            // Ignoră punctele care cauzează erori de evaluare
+                            console.warn("Eroare la evaluarea funcției pentru x =", x, e);
+                        }
+                    }
+
+                    console.log("Puncte generate:", points.length);
+
+                    // Verifică dacă avem suficiente puncte pentru a desena graficul
+                    if (points.length < 2) {
+                        showError("Nu există suficiente puncte valide în intervalul specificat");
+                        return;
+                    }
+
+                    // Creează sau actualizează graficul
+                    createChart(points, functionString, xMin, xMax, yMin, yMax);
+                    hideError();
+                } catch (error) {
+                    console.error("Eroare la evaluarea funcției:", error);
+                    showError("Funcție invalidă: " + error.message);
+                }
+            }
+
+            function createChart(points, functionString, xMin, xMax, yMin, yMax) {
+                console.log("Creez graficul cu", points.length, "puncte");
+
+                // Asigură-te că canvas-ul este vizibil și are dimensiuni corecte
+                graphCanvas.style.display = "block";
+                graphCanvas.width = graphCanvas.parentElement.clientWidth * 0.95;
+                graphCanvas.height = 500;
+
+                console.log("Dimensiuni canvas:", graphCanvas.width, "x", graphCanvas.height);
+
+                // Distruge graficul anterior dacă există
+                if (chart) {
+                    chart.destroy();
+                }
+
+                // Pregătește datele pentru Chart.js
+                const data = {
+                    datasets: [
+                        {
+                            label: "f(x) = " + functionString,
+                            data: points,
+                            borderColor: "rgb(75, 192, 192)",
+                            backgroundColor: "rgba(75, 192, 192, 0.2)",
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            showLine: true,
+                            fill: false,
+                        },
+                    ],
+                };
+
+                // Configurația graficului - simplificată pentru compatibilitate maximă
+                const config = {
+                    type: "scatter",
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: "linear",
+                                position: "center",
+                                min: xMin,
+                                max: xMax,
+                                title: {
+                                    display: true,
+                                    text: "X",
+                                },
+                            },
+                            y: {
+                                type: "linear",
+                                position: "center",
+                                min: yMin,
+                                max: yMax,
+                                title: {
+                                    display: true,
+                                    text: "Y",
+                                },
+                            },
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => `(${context.parsed.x.toFixed(2)}, ${context.parsed.y.toFixed(2)})`,
+                                },
+                            },
+                        },
+                    },
+                };
+
+                // Creează noul grafic
+                try {
+                    chart = new Chart(graphCanvas, config);
+                    console.log("Grafic creat cu succes");
+                } catch (error) {
+                    console.error("Eroare la crearea graficului:", error);
+                    showError("Eroare la crearea graficului: " + error.message);
+                }
+            }
+
+            function showError(message) {
+                console.error("Eroare grafic:", message);
+                if (errorMessage) {
+                    errorMessage.textContent = message;
+                    errorMessage.classList.remove("hidden");
+                }
+            }
+
+            function hideError() {
+                if (errorMessage) {
+                    errorMessage.classList.add("hidden");
+                }
+            }
+
+            // Desenează graficul inițial după încărcarea paginii
+            console.log("Inițializez graficul implicit");
+            setTimeout(() => {
+                plotFunction();
+            }, 1000);
+        });
+    </script>
+    
+    <!-- Scriptul de autentificare separat -->
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Scuolino</h1>
+            <p>Partenerul tău de învățare</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Acasă</a></li>
+                <li><a href="mathematics.html"><i class="fas fa-square-root-alt"></i> Matematică</a></li>
+                <li><a href="informatics.html"><i class="fas fa-laptop-code"></i> Informatică</a></li>
+                <li><a href="quiz.html"><i class="fas fa-question-circle"></i> Quiz</a></li>
+                <li><a href="calculator.html"><i class="fas fa-calculator"></i> Calculator</a></li>
+                <li><a href="graph.html" class="active"><i class="fas fa-chart-line"></i> Grafice</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Conectare</button>
+            <button id="logoutBtn" class="logout-btn hidden"><i class="fas fa-sign-out-alt"></i> Deconectare</button>
+            <span id="userDisplay" class="hidden">Bine ai venit, <span id="username">Utilizator</span>!</span>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Conectare la Scuolino</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Nume utilizator:</label>
+                    <input type="text" id="usernameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă:</label>
+                    <input type="password" id="passwordInput" required>
+                </div>
+                <button type="submit" class="submit-btn">Conectare</button>
+            </form>
+        </div>
+    </div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <h2>Grafice de Funcții</h2>
+            <p>Vizualizează funcții matematice cu graficul nostru interactiv</p>
+        </div>
+
+        <div class="graph-container">
+            <div class="graph-controls">
+                <div class="function-input">
+                    <label for="function">Introduceți o funcție de x:</label>
+                    <input type="text" id="function" placeholder="ex: x^2, sin(x), 2*x+1" value="x^2">
+                    <button id="plot-btn" class="btn">Desenează Graficul</button>
+                </div>
+                
+                <div class="range-controls">
+                    <div class="range-group">
+                        <label for="x-min">X Min:</label>
+                        <input type="number" id="x-min" value="-10" step="1">
+                    </div>
+                    <div class="range-group">
+                        <label for="x-max">X Max:</label>
+                        <input type="number" id="x-max" value="10" step="1">
+                    </div>
+                    <div class="range-group">
+                        <label for="y-min">Y Min:</label>
+                        <input type="number" id="y-min" value="-10" step="1">
+                    </div>
+                    <div class="range-group">
+                        <label for="y-max">Y Max:</label>
+                        <input type="number" id="y-max" value="10" step="1">
+                    </div>
+                </div>
+                
+                <div class="function-presets">
+                    <h3>Funcții Comune</h3>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-function="x^2">f(x) = x²</button>
+                        <button class="preset-btn" data-function="x^3">f(x) = x³</button>
+                        <button class="preset-btn" data-function="sin(x)">f(x) = sin(x)</button>
+                        <button class="preset-btn" data-function="cos(x)">f(x) = cos(x)</button>
+                        <button class="preset-btn" data-function="tan(x)">f(x) = tan(x)</button>
+                        <button class="preset-btn" data-function="exp(x)">f(x) = e^x</button>
+                        <button class="preset-btn" data-function="log(x)">f(x) = log(x)</button>
+                        <button class="preset-btn" data-function="sqrt(x)">f(x) = √x</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graph-display">
+                <canvas id="graph-canvas"></canvas>
+                <div id="error-message" class="error-message hidden"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <h2>Scuolino</h2>
+                    <p>Partenerul tău de învățare</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Link-uri Rapide</h3>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="mathematics.html">Matematică</a></li>
+                    <li><a href="informatics.html">Informatică</a></li>
+                    <li><a href="quiz.html">Quiz</a></li>
+                    <li><a href="calculator.html">Calculator</a></li>
+                    <li><a href="graph.html">Grafice</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@scuolino.ro</p>
+                <p><i class="fas fa-phone"></i> 0758852287</p>
+                <p><i class="fas fa-map-marker-alt"></i> Strada Mileniului nr. 24, Satu Mare</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Secțiuni Viitoare</h3>
+                <ul>
+                    <li><i class="fas fa-book"></i> Literatură română</li>
+                    <li><i class="fas fa-flask"></i> Fizică și chimie</li>
+                    <li><i class="fas fa-globe-europe"></i> Geografie și istorie</li>
+                    <li><i class="fas fa-language"></i> Limbi străine</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Scuolino. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+</body>
+</html>

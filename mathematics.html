@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematică - Scuolino</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="auth.js" defer></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Scuolino</h1>
+            <p>Partenerul tău de învățare</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Acasă</a></li>
+                <li><a href="mathematics.html" class="active"><i class="fas fa-square-root-alt"></i> Matematică</a></li>
+                <li><a href="informatics.html"><i class="fas fa-laptop-code"></i> Informatică</a></li>
+                <li><a href="quiz.html"><i class="fas fa-question-circle"></i> Quiz</a></li>
+                <li><a href="calculator.html"><i class="fas fa-calculator"></i> Calculator</a></li>
+                <li><a href="graph.html"><i class="fas fa-chart-line"></i> Grafice</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Conectare</button>
+            <button id="logoutBtn" class="logout-btn hidden"><i class="fas fa-sign-out-alt"></i> Deconectare</button>
+            <span id="userDisplay" class="hidden">Bine ai venit, <span id="username">Utilizator</span>!</span>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Conectare la Scuolino</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Nume utilizator:</label>
+                    <input type="text" id="usernameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă:</label>
+                    <input type="password" id="passwordInput" required>
+                </div>
+                <button type="submit" class="submit-btn">Conectare</button>
+            </form>
+        </div>
+    </div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <h2>Matematică</h2>
+            <p>Concepte și formule esențiale pentru examenul de bacalaureat</p>
+        </div>
+
+        <div class="content-container">
+            <aside class="sidebar">
+                <h3>Subiecte</h3>
+                <ul>
+                    <li><a href="#algebra">Algebră</a></li>
+                    <li><a href="#progresii">Progresii</a></li>
+                    <li><a href="#logaritmi">Logaritmi</a></li>
+                    <li><a href="#puteri">Puteri și Radicali</a></li>
+                    <li><a href="#numere-complexe">Numere Complexe</a></li>
+                    <li><a href="#formule-calcul">Formule de Calcul</a></li>
+                    <li><a href="#analysis">Analiză Matematică</a></li>
+                    <li><a href="#integrale">Integrale</a></li>
+                    <li><a href="#geometry">Geometrie</a></li>
+                    <li><a href="#trigonometry">Trigonometrie</a></li>
+                    <li><a href="#probability">Probabilități și Statistică</a></li>
+                </ul>
+            </aside>
+
+            <section class="main-content">
+                <article id="algebra" class="topic-section">
+                    <h3>Algebră</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Polinoame</h4>
+                            <p>Un polinom de grad $$n$$ are forma:</p>
+                            <div class="formula">$$P(x) = a_nx^n + a_{n-1}x^{n-1} + \ldots + a_1x + a_0$$</div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Ecuații de gradul al doilea</h4>
+                            <p>Forma generală este $$ax^2 + bx + c = 0$$ cu soluția:</p>
+                            <div class="formula">$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</div>
+                            
+                            <p>Cazurile posibile:</p>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Cazul I: $$\Delta > 0$$</div>
+                                    <p>Ecuația are două soluții reale distincte:</p>
+                                    <div class="formula">$$x_1 = \frac{-b + \sqrt{\Delta}}{2a}, \quad x_2 = \frac{-b - \sqrt{\Delta}}{2a}$$</div>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Cazul II: $$\Delta = 0$$</div>
+                                    <p>Ecuația are o soluție reală dublă:</p>
+                                    <div class="formula">$$x_1 = x_2 = -\frac{b}{2a}$$</div>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Cazul III: $$\Delta < 0$$</div>
+                                    <p>Ecuația nu are soluții reale.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Formulele lui Vieta</h4>
+                            <p>Pentru o ecuație de gradul al doilea cu rădăcinile $$r$$ și $$s$$:</p>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$r + s = -\frac{b}{a}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$r \cdot s = \frac{c}{a}$$</div>
+                                </div>
+                            </div>
+                            
+                            <p>Pentru ecuații de gradul al treilea cu rădăcinile $$r_1$$, $$r_2$$, $$r_3$$:</p>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$r_1 + r_2 + r_3 = -\frac{b}{a}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$r_1 \cdot r_2 + r_1 \cdot r_3 + r_2 \cdot r_3 = \frac{c}{a}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$r_1 \cdot r_2 \cdot r_3 = -\frac{d}{a}$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="progresii" class="topic-section">
+                    <h3>Progresii</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Progresii Aritmetice</h4>
+                            <p>O progresie aritmetică este un șir în care diferența dintre oricare doi termeni consecutivi este constantă.</p>
+                            
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Formula de recurență</div>
+                                    <div class="formula">$$a_{n+1} = a_n + r$$</div>
+                                    <p>unde $$r$$ este rația progresiei.</p>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Formula termenului general</div>
+                                    <div class="formula">$$a_n = a_1 + (n-1)r$$</div>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Suma primilor $$n$$ termeni</div>
+                                    <div class="formula">$$S_n = \frac{n}{2}(a_1 + a_n) = \frac{n}{2}[2a_1 + (n-1)r]$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Progresii Geometrice</h4>
+                            <p>O progresie geometrică este un șir în care raportul dintre oricare doi termeni consecutivi este constant.</p>
+                            
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Formula de recurență</div>
+                                    <div class="formula">$$a_{n+1} = a_n \cdot q$$</div>
+                                    <p>unde $$q$$ este rația progresiei.</p>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Formula termenului general</div>
+                                    <div class="formula">$$a_n = a_1 \cdot q^{n-1}$$</div>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Suma primilor $$n$$ termeni</div>
+                                    <div class="formula">$$S_n = \frac{a_1(1-q^n)}{1-q}$$ pentru $$q \neq 1$$</div>
+                                </div>
+                                
+                                <div class="formula-card">
+                                    <div class="formula-title">Suma infinită</div>
+                                    <div class="formula">$$S_{\infty} = \frac{a_1}{1-q}$$ pentru $$|q| < 1$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="logaritmi" class="topic-section">
+                    <h3>Logaritmi</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Definiție</h4>
+                            <div class="formula">$$\log_a b = c \Leftrightarrow a^c = b$$</div>
+                            
+                            <h4>Condiții de existență</h4>
+                            <p>$$\log_a b$$ există dacă:</p>
+                            <ul>
+                                <li>$$a > 0, a \neq 1$$ (baza logaritmului)</li>
+                                <li>$$b > 0$$ (argumentul logaritmului)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Proprietăți ale logaritmilor</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_a 1 = 0$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_a a = 1$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_a (x \cdot y) = \log_a x + \log_a y$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_a \frac{x}{y} = \log_a x - \log_a y$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_a x^p = p \cdot \log_a x$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_a x = \frac{\log_b x}{\log_b a}$$</div>
+                                    <p>(formula de schimbare a bazei)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Logaritmi speciali</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_{10} x = \lg x$$</div>
+                                    <p>(logaritm zecimal)</p>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\log_e x = \ln x$$</div>
+                                    <p>(logaritm natural, $$e \approx 2.71828$$)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Monotonia funcției logaritmice</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Dacă $$a > 1$$</div>
+                                    <p>Funcția $$f(x) = \log_a x$$ este strict crescătoare</p>
+                                    <div class="formula">$$x_1 < x_2 \Rightarrow \log_a(x_1) < \log_a(x_2)$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Dacă $$0 < a < 1$$</div>
+                                    <p>Funcția $$f(x) = \log_a x$$ este strict descrescătoare</p>
+                                    <div class="formula">$$x_1 < x_2 \Rightarrow \log_a(x_1) > \log_a(x_2)$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="puteri" class="topic-section">
+                    <h3>Puteri și Radicali</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Puteri</h4>
+                            <p>Definiție: $$a^n = \underbrace{a \cdot a \cdot ... \cdot a}_{n \text{ ori}}$$</p>
+                            
+                            <h4>Proprietăți ale puterilor</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$a^0 = 1$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^1 = a$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^m \cdot a^n = a^{m+n}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{a^m}{a^n} = a^{m-n}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(a^m)^n = a^{m \cdot n}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(a \cdot b)^n = a^n \cdot b^n$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(\frac{a}{b})^n = \frac{a^n}{b^n}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^{-n} = \frac{1}{a^n}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^{\frac{1}{n}} = \sqrt[n]{a}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^{\frac{m}{n}} = \sqrt[n]{a^m}$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Radicali</h4>
+                            <p>Condiții de existență pentru radicali de ordin par: $$\sqrt[2n]{a} \in \mathbb{R} \Leftrightarrow a \geq 0$$</p>
+                            
+                            <h4>Proprietăți ale radicalilor</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\sqrt{a} \cdot \sqrt{b} = \sqrt{a \cdot b}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{\sqrt{a}}{\sqrt{b}} = \sqrt{\frac{a}{b}}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(\sqrt{a})^2 = a$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\sqrt[n]{a^n} = |a|$$ pentru $$n$$ par</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\sqrt[n]{a^n} = a$$ pentru $$n$$ impar</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="numere-complexe" class="topic-section">
+                    <h3>Numere Complexe</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Definiție</h4>
+                            <p>Un număr complex are forma $$z = a + bi$$, unde:</p>
+                            <ul>
+                                <li>$$a$$ = partea reală (Re(z))</li>
+                                <li>$$b$$ = partea imaginară (Im(z))</li>
+                                <li>$$i$$ = unitatea imaginară, $$i^2 = -1$$</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Operații cu numere complexe</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Adunare</div>
+                                    <div class="formula">$$(a + bi) + (c + di) = (a + c) + (b + d)i$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Scădere</div>
+                                    <div class="formula">$$(a + bi) - (c + di) = (a - c) + (b - d)i$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Înmulțire</div>
+                                    <div class="formula">$$(a + bi) \cdot (c + di) = (ac - bd) + (ad + bc)i$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Conjugatul unui număr complex</h4>
+                            <div class="formula">$$\overline{z} = \overline{a + bi} = a - bi$$</div>
+                            
+                            <h4>Modulul unui număr complex</h4>
+                            <div class="formula">$$|z| = |a + bi| = \sqrt{a^2 + b^2}$$</div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Proprietăți</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$|z| = |\overline{z}|$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$|z_1 \cdot z_2| = |z_1| \cdot |z_2|$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$z \cdot \overline{z} = |z|^2$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$|z_1 + z_2| \leq |z_1| + |z_2|$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Puterile lui i</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$i^1 = i$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$i^2 = -1$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$i^3 = -i$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$i^4 = 1$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="formule-calcul" class="topic-section">
+                    <h3>Formule de Calcul Prescurtat</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Formule de calcul prescurtat</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$(a + b)^2 = a^2 + 2ab + b^2$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(a - b)^2 = a^2 - 2ab + b^2$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(a - b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^2 - b^2 = (a + b)(a - b)$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^3 - b^3 = (a - b)(a^2 + ab + b^2)$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$a^3 + b^3 = (a + b)(a^2 - ab + b^2)$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Partea întreagă și partea fracționară</h4>
+                            <p>Partea întreagă a unui număr real $$x$$, notată $$[x]$$, este cel mai mare număr întreg mai mic sau egal cu $$x$$.</p>
+                            <p>Partea fracționară a unui număr real $$x$$, notată $$\{x\}$$, este $$\{x\} = x - [x]$$.</p>
+                            
+                            <h4>Modulul unui număr real</h4>
+                            <div class="formula">$$|x| = \begin{cases} x, & \text{dacă } x \geq 0 \\ -x, & \text{dacă } x < 0 \end{cases}$$</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="analysis" class="topic-section">
+                    <h3>Analiză Matematică</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Limite</h4>
+                            <p>Definiția unei limite:</p>
+                            <div class="formula">$$\lim_{x \to a} f(x) = L$$</div>
+                            
+                            <h4>Limite remarcabile</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\lim_{x \to 0} \frac{1-\cos x}{x^2} = \frac{1}{2}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\lim_{x \to 0} (1+x)^{\frac{1}{x}} = e$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\lim_{x \to \infty} (1+\frac{1}{x})^x = e$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Derivate</h4>
+                            <p>Derivata unei funcții este definită ca:</p>
+                            <div class="formula">$$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$</div>
+                            
+                            <h4>Derivate uzuale</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{d}{dx}(x^n) = nx^{n-1}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{d}{dx}(e^x) = e^x$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{d}{dx}(\ln x) = \frac{1}{x}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{d}{dx}(\sin x) = \cos x$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{d}{dx}(\cos x) = -\sin x$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\frac{d}{dx}(\tan x) = \frac{1}{\cos^2 x}$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Reguli de derivare</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$(f + g)' = f' + g'$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(f \cdot g)' = f' \cdot g + f \cdot g'$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(\frac{f}{g})' = \frac{f' \cdot g - f \cdot g'}{g^2}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$(f \circ g)' = (f' \circ g) \cdot g'$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="integrale" class="topic-section">
+                    <h3>Integrale</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Primitive</h4>
+                            <p>$$F$$ este o primitivă a funcției $$f$$ dacă $$F'(x) = f(x)$$</p>
+                            <p>Notație: $$\int f(x) dx = F(x) + C$$</p>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Integrala definită</h4>
+                            <p>Formula lui Leibniz-Newton:</p>
+                            <div class="formula">$$\int_a^b f(x) dx = F(b) - F(a)$$</div>
+                            
+                            <h4>Proprietăți ale integralei definite</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\int_a^b f(x) dx = -\int_b^a f(x) dx$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int_a^b [f(x) + g(x)] dx = \int_a^b f(x) dx + \int_a^b g(x) dx$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int_a^b k \cdot f(x) dx = k \cdot \int_a^b f(x) dx$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int_a^c f(x) dx + \int_c^b f(x) dx = \int_a^b f(x) dx$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Metoda integrării prin părți</h4>
+                            <div class="formula long-formula">$$\int u(x) \cdot v'(x) dx = u(x) \cdot v(x) - \int v(x) \cdot u'(x) dx$$</div>
+                            <p>Pentru integrala definită:</p>
+                            <div class="formula long-formula">$$\int_a^b u(x) \cdot v'(x) dx = [u(x) \cdot v(x)]_a^b - \int_a^b v(x) \cdot u'(x) dx$$</div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Integrale uzuale</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\int x^n dx = \frac{x^{n+1}}{n+1} + C, \quad n \neq -1$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int \frac{1}{x} dx = \ln|x| + C$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int e^x dx = e^x + C$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int \sin x dx = -\cos x + C$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int \cos x dx = \sin x + C$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int \frac{1}{1+x^2} dx = \arctan x + C$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\int \frac{1}{\sqrt{1-x^2}} dx = \arcsin x + C$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Aplicații ale integralei definite</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Aria unei suprafețe plane</div>
+                                    <div class="formula">$$A = \int_a^b |f(x)| dx$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Aria dintre două curbe</div>
+                                    <div class="formula">$$A = \int_a^b |f(x) - g(x)| dx$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Volumul unui corp de rotație</div>
+                                    <div class="formula">$$V = \pi \int_a^b [f(x)]^2 dx$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="geometry" class="topic-section">
+                    <h3>Geometrie</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Vectori</h4>
+                            <p>Produsul scalar a doi vectori:</p>
+                            <div class="formula">$$\vec{a} \cdot \vec{b} = |a||b|\cos\theta$$</div>
+                            
+                            <h4>Geometrie analitică</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Ecuația dreptei</div>
+                                    <div class="formula">$$ax + by + c = 0$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Ecuația cercului</div>
+                                    <div class="formula">$$(x - h)^2 + (y - k)^2 = r^2$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Distanța dintre două puncte</h4>
+                            <div class="formula">$$d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$$</div>
+                            
+                            <h4>Coordonatele mijlocului unui segment</h4>
+                            <div class="formula">$$M_{AB} = (\frac{x_A + x_B}{2}, \frac{y_A + y_B}{2})$$</div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Aria unui triunghi</h4>
+                            <div class="formula">$$A = \frac{1}{2} \cdot |x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)|$$</div>
+                            
+                            <h4>Distanța de la un punct la o dreaptă</h4>
+                            <div class="formula">$$d(P, d) = \frac{|ax_0 + by_0 + c|}{\sqrt{a^2 + b^2}}$$</div>
+                            <p>unde $$P(x_0, y_0)$$ și dreapta $$d: ax + by + c = 0$$</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="trigonometry" class="topic-section">
+                    <h3>Trigonometrie</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Identități fundamentale</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$\sin^2 \theta + \cos^2 \theta = 1$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\tan \theta = \frac{\sin \theta}{\cos \theta}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\sin(\alpha \pm \beta) = \sin \alpha \cos \beta \pm \cos \alpha \sin \beta$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\cos(\alpha \pm \beta) = \cos \alpha \cos \beta \mp \sin \alpha \sin \beta$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$\sin(2\alpha) = 2\sin \alpha \cos \alpha$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula long-formula">$$\cos(2\alpha) = \cos^2 \alpha - \sin^2 \alpha = 2\cos^2 \alpha - 1 = 1 - 2\sin^2 \alpha$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Teorema sinusurilor</h4>
+                            <div class="formula">$$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$$</div>
+                            <p>unde $$R$$ este raza cercului circumscris triunghiului.</p>
+                            
+                            <h4>Teorema cosinusurilor</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$a^2 = b^2 + c^2 - 2bc\cos A$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$b^2 = a^2 + c^2 - 2ac\cos B$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$c^2 = a^2 + b^2 - 2ab\cos C$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Aria unui triunghi</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula">$$A = \frac{1}{2} \cdot ab \cdot \sin C$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$A = \frac{1}{2} \cdot bc \cdot \sin A$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula">$$A = \frac{1}{2} \cdot ac \cdot \sin B$$</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="probability" class="topic-section">
+                    <h3>Probabilități și Statistică</h3>
+                    <div class="math-content">
+                        <div class="math-section">
+                            <h4>Probabilitate</h4>
+                            <p>Probabilitatea unui eveniment A este:</p>
+                            <div class="formula long-formula">$$P(A) = \frac{\text{numărul de cazuri favorabile}}{\text{numărul total de cazuri posibile}}$$</div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Combinatorică</h4>
+                            <div class="formula-group">
+                                <div class="formula-card">
+                                    <div class="formula-title">Permutări</div>
+                                    <div class="formula">$$P(n) = n!$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Aranjamente</div>
+                                    <div class="formula">$$A_n^k = \frac{n!}{(n-k)!}$$</div>
+                                </div>
+                                <div class="formula-card">
+                                    <div class="formula-title">Combinări</div>
+                                    <div class="formula">$$C(n,k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}$$</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="math-section">
+                            <h4>Binomul lui Newton</h4>
+                            <div class="formula">$$(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k$$</div>
+                            
+                            <h4>Suma coeficienților binomiali</h4>
+                            <div class="formula">$$\sum_{k=0}^{n} \binom{n}{k} = 2^n$$</div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <h2>Scuolino</h2>
+                    <p>Partenerul tău de învățare</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Link-uri Rapide</h3>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="mathematics.html">Matematică</a></li>
+                    <li><a href="informatics.html">Informatică</a></li>
+                    <li><a href="quiz.html">Quiz</a></li>
+                    <li><a href="calculator.html">Calculator</a></li>
+                    <li><a href="graph.html">Grafice</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@scuolino.ro</p>
+                <p><i class="fas fa-phone"></i> 0758852287</p>
+                <p><i class="fas fa-map-marker-alt"></i> Strada Mileniului nr. 24, Satu Mare</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Secțiuni Viitoare</h3>
+                <ul>
+                    <li><i class="fas fa-book"></i> Literatură română</li>
+                    <li><i class="fas fa-flask"></i> Fizică și chimie</li>
+                    <li><i class="fas fa-globe-europe"></i> Geografie și istorie</li>
+                    <li><i class="fas fa-language"></i> Limbi străine</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Scuolino. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+</body>
+</html>

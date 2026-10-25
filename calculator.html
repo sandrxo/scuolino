@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator - Scuolino</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="auth.js" defer></script>
+    <script src="calculator.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Scuolino</h1>
+            <p>Partenerul tău de învățare</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Acasă</a></li>
+                <li><a href="mathematics.html"><i class="fas fa-square-root-alt"></i> Matematică</a></li>
+                <li><a href="informatics.html"><i class="fas fa-laptop-code"></i> Informatică</a></li>
+                <li><a href="quiz.html"><i class="fas fa-question-circle"></i> Quiz</a></li>
+                <li><a href="calculator.html" class="active"><i class="fas fa-calculator"></i> Calculator</a></li>
+                <li><a href="graph.html"><i class="fas fa-chart-line"></i> Grafice</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Conectare</button>
+            <button id="logoutBtn" class="logout-btn hidden"><i class="fas fa-sign-out-alt"></i> Deconectare</button>
+            <span id="userDisplay" class="hidden">Bine ai venit, <span id="username">Utilizator</span>!</span>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Conectare la Scuolino</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Nume utilizator:</label>
+                    <input type="text" id="usernameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă:</label>
+                    <input type="password" id="passwordInput" required>
+                </div>
+                <button type="submit" class="submit-btn">Conectare</button>
+            </form>
+        </div>
+    </div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <h2>Calculator</h2>
+            <p>Un calculator puternic pentru rezolvarea problemelor matematice</p>
+        </div>
+
+        <div class="calculator-container">
+            <div class="calculator">
+                <div class="calculator-display">
+                    <div id="history"></div>
+                    <div id="display">0</div>
+                </div>
+                <div class="calculator-buttons">
+                    <div class="calculator-row">
+                        <button class="calc-btn function-btn" data-action="clear">C</button>
+                        <button class="calc-btn function-btn" data-action="backspace"><i class="fas fa-backspace"></i></button>
+                        <button class="calc-btn function-btn" data-action="percent">%</button>
+                        <button class="calc-btn operator-btn" data-action="divide">÷</button>
+                    </div>
+                    <div class="calculator-row">
+                        <button class="calc-btn number-btn" data-num="7">7</button>
+                        <button class="calc-btn number-btn" data-num="8">8</button>
+                        <button class="calc-btn number-btn" data-num="9">9</button>
+                        <button class="calc-btn operator-btn" data-action="multiply">×</button>
+                    </div>
+                    <div class="calculator-row">
+                        <button class="calc-btn number-btn" data-num="4">4</button>
+                        <button class="calc-btn number-btn" data-num="5">5</button>
+                        <button class="calc-btn number-btn" data-num="6">6</button>
+                        <button class="calc-btn operator-btn" data-action="subtract">−</button>
+                    </div>
+                    <div class="calculator-row">
+                        <button class="calc-btn number-btn" data-num="1">1</button>
+                        <button class="calc-btn number-btn" data-num="2">2</button>
+                        <button class="calc-btn number-btn" data-num="3">3</button>
+                        <button class="calc-btn operator-btn" data-action="add">+</button>
+                    </div>
+                    <div class="calculator-row">
+                        <button class="calc-btn number-btn" data-num="0">0</button>
+                        <button class="calc-btn number-btn" data-num=".">.</button>
+                        <button class="calc-btn function-btn" data-action="negate">±</button>
+                        <button class="calc-btn equals-btn" data-action="calculate">=</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scientific-functions">
+                <h3>Funcții Științifice</h3>
+                <div class="scientific-buttons">
+                    <button class="sci-btn" data-action="sin">sin</button>
+                    <button class="sci-btn" data-action="cos">cos</button>
+                    <button class="sci-btn" data-action="tan">tan</button>
+                    <button class="sci-btn" data-action="log">log</button>
+                    <button class="sci-btn" data-action="ln">ln</button>
+                    <button class="sci-btn" data-action="sqrt">√</button>
+                    <button class="sci-btn" data-action="power">x^y</button>
+                    <button class="sci-btn" data-action="factorial">x!</button>
+                    <button class="sci-btn" data-action="pi">π</button>
+                    <button class="sci-btn" data-action="e">e</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <h2>Scuolino</h2>
+                    <p>Partenerul tău de învățare</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Link-uri Rapide</h3>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="mathematics.html">Matematică</a></li>
+                    <li><a href="informatics.html">Informatică</a></li>
+                    <li><a href="quiz.html">Quiz</a></li>
+                    <li><a href="calculator.html">Calculator</a></li>
+                    <li><a href="graph.html">Grafice</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@scuolino.ro</p>
+                <p><i class="fas fa-phone"></i> 0758852287</p>
+                <p><i class="fas fa-map-marker-alt"></i> Strada Mileniului nr. 24, Satu Mare</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Secțiuni Viitoare</h3>
+                <ul>
+                    <li><i class="fas fa-book"></i> Literatură română</li>
+                    <li><i class="fas fa-flask"></i> Fizică și chimie</li>
+                    <li><i class="fas fa-globe-europe"></i> Geografie și istorie</li>
+                    <li><i class="fas fa-language"></i> Limbi străine</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Scuolino. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Scuolino</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="auth.js" defer></script>
+    <script src="quiz.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Scuolino</h1>
+            <p>Partenerul tău de învățare</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Acasă</a></li>
+                <li><a href="mathematics.html"><i class="fas fa-square-root-alt"></i> Matematică</a></li>
+                <li><a href="informatics.html"><i class="fas fa-laptop-code"></i> Informatică</a></li>
+                <li><a href="quiz.html" class="active"><i class="fas fa-question-circle"></i> Quiz</a></li>
+                <li><a href="calculator.html"><i class="fas fa-calculator"></i> Calculator</a></li>
+                <li><a href="graph.html"><i class="fas fa-chart-line"></i> Grafice</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Conectare</button>
+            <button id="logoutBtn" class="logout-btn hidden"><i class="fas fa-sign-out-alt"></i> Deconectare</button>
+            <span id="userDisplay" class="hidden">Bine ai venit, <span id="username">Utilizator</span>!</span>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Conectare la Scuolino</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Nume utilizator:</label>
+                    <input type="text" id="usernameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă:</label>
+                    <input type="password" id="passwordInput" required>
+                </div>
+                <button type="submit" class="submit-btn">Conectare</button>
+            </form>
+        </div>
+    </div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <h2>Quiz</h2>
+            <p>Testează-ți cunoștințele cu quiz-urile noastre pentru bacalaureat</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-selection">
+                <h3>Selectează un Quiz</h3>
+                <div class="quiz-buttons">
+                    <button class="quiz-btn" data-quiz="math1">Quiz Matematică 1</button>
+                    <button class="quiz-btn" data-quiz="math2">Quiz Matematică 2</button>
+                    <button class="quiz-btn" data-quiz="info1">Quiz Informatică 1</button>
+                    <button class="quiz-btn" data-quiz="info2">Quiz Informatică 2</button>
+                </div>
+            </div>
+
+            <div id="quiz-area" class="hidden">
+                <div class="quiz-header">
+                    <h3 id="quiz-title">Titlu Quiz</h3>
+                    <div class="quiz-progress">
+                        <span id="current-question">1</span>/<span id="total-questions">10</span>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <p id="question-text">Textul întrebării apare aici?</p>
+                    <div id="options-container" class="options-container">
+                        <!-- Opțiunile vor fi inserate aici de JavaScript -->
+                    </div>
+                </div>
+
+                <div class="quiz-controls">
+                    <button id="prev-btn" class="nav-btn" disabled>Anterior</button>
+                    <button id="next-btn" class="nav-btn">Următor</button>
+                    <button id="submit-btn" class="submit-btn hidden">Trimite Quiz</button>
+                </div>
+            </div>
+
+            <div id="results-area" class="hidden">
+                <h3>Rezultate Quiz</h3>
+                <div class="results-summary">
+                    <p>Scorul tău: <span id="score">0</span>/<span id="max-score">10</span></p>
+                    <div id="percentage-container">
+                        <div id="percentage-bar"></div>
+                        <span id="percentage-text">0%</span>
+                    </div>
+                </div>
+                <div class="results-actions">
+                    <button id="review-btn" class="btn">Revizuiește Răspunsurile</button>
+                    <button id="retry-btn" class="btn">Încearcă din nou</button>
+                    <button id="new-quiz-btn" class="btn">Alege alt Quiz</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <h2>Scuolino</h2>
+                    <p>Partenerul tău de învățare</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Link-uri Rapide</h3>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="mathematics.html">Matematică</a></li>
+                    <li><a href="informatics.html">Informatică</a></li>
+                    <li><a href="quiz.html">Quiz</a></li>
+                    <li><a href="calculator.html">Calculator</a></li>
+                    <li><a href="graph.html">Grafice</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@scuolino.ro</p>
+                <p><i class="fas fa-phone"></i> 0758852287</p>
+                <p><i class="fas fa-map-marker-alt"></i> Strada Mileniului nr. 24, Satu Mare</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Secțiuni Viitoare</h3>
+                <ul>
+                    <li><i class="fas fa-book"></i> Literatură română</li>
+                    <li><i class="fas fa-flask"></i> Fizică și chimie</li>
+                    <li><i class="fas fa-globe-europe"></i> Geografie și istorie</li>
+                    <li><i class="fas fa-language"></i> Limbi străine</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Scuolino. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+</body>
+</html>
